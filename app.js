@@ -5,6 +5,7 @@ var squares = [];
 
 createBoard();
 
+//creating the board with div elements, bomb and valid classes
 function createBoard() {
   var bombsArray = Array(bombs).fill('bomb');
   var validArray = Array(width * width - bombs).fill('valid');
@@ -19,7 +20,7 @@ function createBoard() {
     squares.push(square);
     square.addEventListener('click', function(e) { click(square); }); 
   }
-
+  //checking all the neighbors of the square to see if there are any bombs
   for (let i = 0; i < squares.length; i++) {
     let totalBombSquares = 0;
     const isLeftEdge = (i % width === 0);
@@ -56,23 +57,28 @@ function createBoard() {
 
 function click(square) {
   let currentId = square.id;
+  //if the square has already been clicked, nothing happens
   if (square.classList.contains('checked')) {
     return;
   }
+  //if the square contains a bomb, the game is over
   if (square.classList.contains('bomb')) {
     square.innerHTML = "B";
     square.style.color = 'white';
     square.style.backgroundColor = 'black';
     alert('Game Over! You stepped on a bomb. You lost. Please press F5 to play again!');
     return;
-  } 
+  }
+  //if the square is valid, there are 2 posibilities:
   if (square.classList.contains('valid')) {
     let total = square.getAttribute('data');
+    //is surrounded by bombs
     if (total != 0 ) {
       square.classList.add('checked');
       square.innerHTML = total;
       isGameWon();
       return; 
+    //is not surrounded by bombs
     } else {
       square.classList.add('checked');
       checkSquare(square, currentId);
@@ -81,7 +87,7 @@ function click(square) {
   }
   isGameWon();
 }
-
+//the neighbors of the square with no bombs surrounding her, are beeing checked in order to display them all 'till a bomb is reached
 function checkSquare(square, currentId) {
   const isLeftEdge = (currentId % width === 0)
   const isRightEdge = (currentId % width === width -1)
@@ -129,7 +135,7 @@ function checkSquare(square, currentId) {
     }
   }, 10)
 }
-
+//checking if the game is over
 function isGameWon() {
   let totalValidSquares = 0;
   for (let i = 0; i < squares.length; i++) {
@@ -141,3 +147,6 @@ function isGameWon() {
     alert("Congratulations! You WON! To play again press F5.")
   }
 }
+
+
+
