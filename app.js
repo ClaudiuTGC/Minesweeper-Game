@@ -63,9 +63,9 @@ function click(square) {
   }
   //if the square contains a bomb, the game is over
   if (square.classList.contains('bomb')) {
-    square.innerHTML = "B";
+    square.innerHTML = "💣";
     square.style.color = 'white';
-    square.style.backgroundColor = 'black';
+    square.style.backgroundColor = 'lightgrey';
     alert('Game Over! You stepped on a bomb. You lost. Please press F5 to play again!');
     return;
   }
